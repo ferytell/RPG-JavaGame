@@ -73,7 +73,7 @@ public class GamePanel extends JPanel implements Runnable{
 				repaint();
 				delta-- ;
 			}
-//			System.out.println("fuckkk");
+//			System.out.println("goooooo");
 			// Update : Update information, kile char position
 			//update();
 			
