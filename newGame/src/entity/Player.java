@@ -2,6 +2,7 @@ package entity;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -24,14 +25,22 @@ public class Player extends Entity{
 		
 		screenX = gp.screenWidth/2 - (gp.tileSize/2);
 		screenY = gp.screenHeight/2 - (gp.tileSize/2);
+		
+		solidArea = new Rectangle();							// Here we decide the size of hitbox char
+		solidArea.x = 8;
+		solidArea.y = 0;
+		solidArea.width = 40;
+		solidArea.height = 40;
 				
+		
+		System.out.print(solidArea.width);
 		setDefaultValues();
 		getPlayerImage();
 	}
 	
 	public void setDefaultValues() {
-		worldX = gp.tileSize * 5;
-		worldY = gp.tileSize * 2;
+		worldX = gp.tileSize * 2;
+		worldY = gp.tileSize * 10;
 		speed = 4;
 		direction = "down";
 		
@@ -63,23 +72,38 @@ public class Player extends Entity{
 				keyH.downPressed == true || keyH.leftPressed == true) {
 			
 			if(keyH.upPressed == true) {
-				worldY -= speed;
 				direction = "up";	
 			}
-			
 			if(keyH.downPressed == true) {
-				worldY += speed;
 				direction = "down";
 			}
-			
 			if(keyH.leftPressed == true) {
-				worldX -= speed;
 				direction = "left";
 			}
-			
 			if(keyH.rightPressed == true) {
-				worldX += speed;
 				direction = "right";
+			}
+			
+											// Check tile collision 
+			collisionOn = false;
+			gp.cChecker.checkTile(this);
+			
+											// If collisoan is false, player can mova  
+			if(collisionOn == false) {
+				switch(direction) {
+				case "up":
+					worldY -= speed;
+					break;
+				case "down":
+					worldY += speed;
+					break;
+				case "left":
+					worldX -= speed;
+					break;
+				case "right":
+					worldX += speed;
+					break;
+				}
 			}
 
 			spriteCounter++;
