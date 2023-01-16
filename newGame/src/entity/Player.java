@@ -18,6 +18,7 @@ public class Player extends Entity{
 	
 	public final int screenX;
 	public final int screenY;
+	int hasKey = 0; 
 			
 	public Player(GamePanel gp, keyHandler keyH) {
 		this.gp = gp;
@@ -27,13 +28,16 @@ public class Player extends Entity{
 		screenY = gp.screenHeight/2 - (gp.tileSize/2);
 		
 		solidArea = new Rectangle();							// Here we decide the size of hitbox char
-		solidArea.x = 8;
-		solidArea.y = 0;
-		solidArea.width = 40;
-		solidArea.height = 40;
+		solidArea.x= 8;
+		solidArea.y = 36;
+		solidAreaDefaultX = solidArea.x;
+		solidAreaDefaultY = solidArea.y;
+		
+		solidArea.width = 32;
+		solidArea.height = 32;
 				
 		
-		System.out.print(solidArea.width);
+	//	System.out.print(solidArea.width);
 		setDefaultValues();
 		getPlayerImage();
 	}
@@ -60,7 +64,7 @@ public class Player extends Entity{
 			
 		}catch(IOException e) {
 				e.printStackTrace();
-				System.out.println("jdjf");
+				System.out.println("error player");
 				
 			
 		}
@@ -88,7 +92,13 @@ public class Player extends Entity{
 			collisionOn = false;
 			gp.cChecker.checkTile(this);
 			
-											// If collisoan is false, player can mova  
+			
+											// Check object collision
+			int objIndex = gp.cChecker.checkObject(this, true);
+			
+			pickUpObject(objIndex);
+			
+											// If collision is false, player can move  
 			if(collisionOn == false) {
 				switch(direction) {
 				case "up":
@@ -120,6 +130,29 @@ public class Player extends Entity{
 		}
 
 		
+	}
+	
+	public void pickUpObject(int i) {
+		
+		if(i != 999) {
+			String objectName = gp.obj[i].name;
+			
+			switch(objectName) {
+			case "key":
+				hasKey++;
+				gp.obj[i] = null;
+				System.out.println(hasKey);
+				break;
+			case "chest":
+				if(hasKey > 0) {
+					gp.obj[i] = null;
+					hasKey--;
+				}
+				System.out.println(hasKey);
+				break;
+			
+			}
+		}
 	}
 	
 	public void draw(Graphics2D g2) {

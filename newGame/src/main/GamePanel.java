@@ -8,6 +8,8 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 import entity.Player;
+import object.SuperObject;
+import object.objCoin;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -43,9 +45,10 @@ public class GamePanel extends JPanel implements Runnable{
 	keyHandler keyH = new keyHandler();
 	Thread gameThread;
 	public collisionChecker cChecker = new collisionChecker(this);
+	public AssetSetter aSetter = new AssetSetter(this); 
+	
 	public Player player = new Player(this, keyH);
-	
-	
+	public SuperObject obj[] = new SuperObject[10]; 				// number of obj that can be displayed
 	
 
 	
@@ -56,11 +59,12 @@ public class GamePanel extends JPanel implements Runnable{
 		this.setDoubleBuffered(true);
 		this.addKeyListener(keyH);
 		this.setFocusable(true);
-		
-			
-		
-		
 	}
+	
+	public void setupGame() {
+		aSetter.setObject(); 
+	}
+	
 	public void startGameThread() {
 		
 		gameThread = new Thread(this);
@@ -99,11 +103,8 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	
 	public void update() {
-		
 		player.update();
-		
-
-
+//		objCoin.update();
 	}
 
 		
@@ -112,7 +113,19 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		Graphics2D g2 = (Graphics2D)g;
 		
+		// Tile draw
+		
 		tileMan.draw(g2);
+		
+		// object draw
+		
+		for(int i = 0; i < obj.length; i++) {
+			if(obj[i] != null) {
+				obj[i].draw(g2, this);
+			}
+		}
+		
+		// Player draw
 		player.draw(g2);
 		
 		
