@@ -6,10 +6,7 @@ import javax.imageio.ImageIO;
 
 public class objCoin extends SuperObject {
 	
-	static BufferedImage img1;
-	static BufferedImage img2;
-	static BufferedImage img3;
-	static BufferedImage img4;
+	public BufferedImage img1, img2, img3, img4;
 	public static int spriteCounter = 0;
 	public static int spriteNum = 1;
 	
@@ -17,6 +14,7 @@ public class objCoin extends SuperObject {
 		
 		name = "coin";
 		getCoinImage();
+		update();
 		
 	}
 	
@@ -32,28 +30,37 @@ public class objCoin extends SuperObject {
 		
 	}
 	
-	public static void update() {
+	public void update() {
 		spriteCounter++;
 		if(spriteCounter > 15) {			// FPS is 60, this will tell how fast animation change (bigger = slower)
 			if(spriteNum == 1) {
-				image = img1;
 				spriteNum = 2;
 			}
 			if(spriteNum == 2) {
-				image = img2;
 				spriteNum = 3;
 			}
 			if(spriteNum == 3) {
-				image = img3;
 				spriteNum = 4;
 			}
 			if(spriteNum == 4) {
-				image = img4;
 				spriteNum = 1;
-			}
+			}	
+		}
+		switch(spriteNum) {
+		case 1:
+			image = img1;
+			break;
+		case 2:
+			image = img2;
+			break;
+		case 3:
+			image = img3;
+			break;
+		case 4:
+			image = img4;
+			break;
 			
 		}
-		
 		
 		
 	}

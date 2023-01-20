@@ -18,7 +18,7 @@ public class Player extends Entity{
 	
 	public final int screenX;
 	public final int screenY;
-	int hasKey = 0; 
+	public int hasKey = 0; 
 			
 	public Player(GamePanel gp, keyHandler keyH) {
 		this.gp = gp;
@@ -29,7 +29,7 @@ public class Player extends Entity{
 		
 		solidArea = new Rectangle();							// Here we decide the size of hitbox char
 		solidArea.x= 8;
-		solidArea.y = 36;
+		solidArea.y = 16;
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;
 		
@@ -139,17 +139,36 @@ public class Player extends Entity{
 			
 			switch(objectName) {
 			case "key":
+				gp.playSE(1);
 				hasKey++;
 				gp.obj[i] = null;
-				System.out.println(hasKey);
+				gp.ui.showMessage("you got Key!");
 				break;
 			case "chest":
 				if(hasKey > 0) {
-					gp.obj[i] = null;
+					gp.playSE(2);
+					gp.obj[i] = null;						// remove obj if have a key
 					hasKey--;
+					gp.ui.showMessage("you open the chest!");
 				}
-				System.out.println(hasKey);
+				else {
+					gp.ui.showMessage("You need key to open this shit!");
+				}
 				break;
+			case "boot":
+				gp.playSE(0);
+				speed += 2;
+				gp.obj[i] = null;
+				gp.ui.showMessage("OH YEAHHHHHHHH BABY!!!!!!");
+				break;
+				
+			case "door":
+				gp.ui.showMessage("Fuckkk");
+				gp.ui.gameFinnished = true;
+				gp.stopMusic();
+				gp.playSE(6);
+				break;
+
 			
 			}
 		}
@@ -201,6 +220,8 @@ public class Player extends Entity{
 		}
 		
 		g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+		g2.setColor(Color.red);
+		g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
 		
 	}
 

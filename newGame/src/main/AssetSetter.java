@@ -1,8 +1,10 @@
 package main;
 
+import object.objBoot;
 import object.objCampfire;
 import object.objChest;
 import object.objCoin;
+import object.objDoor;
 import object.objKey;
 
 public class AssetSetter {
@@ -30,9 +32,17 @@ public class AssetSetter {
 		gp.obj[3].worldX = 16 * gp.tileSize;
 		gp.obj[3].worldY = 3 * gp.tileSize;
 
-		gp.obj[4] = new objCampfire();
+		gp.obj[4] = new objCoin();
 		gp.obj[4].worldX = 17 * gp.tileSize;
 		gp.obj[4].worldY = 3 * gp.tileSize;
+		
+		gp.obj[5] = new objBoot();
+		gp.obj[5].worldX = 20 * gp.tileSize;
+		gp.obj[5].worldY = 3 * gp.tileSize;
+		
+		gp.obj[6] = new objDoor();
+		gp.obj[6].worldX = 25 * gp.tileSize;
+		gp.obj[6].worldY = 3 * gp.tileSize;
 
 	}
 
