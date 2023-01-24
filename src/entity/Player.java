@@ -9,32 +9,32 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import main.GamePanel;
+import main.UtilityTools;
 import main.keyHandler;
 
 public class Player extends Entity{
 	
-	GamePanel gp;
+
 	keyHandler keyH;
 	
 	public final int screenX;
 	public final int screenY;
-	public int hasKey = 0; 
 			
 	public Player(GamePanel gp, keyHandler keyH) {
-		this.gp = gp;
+		super(gp);
 		this.keyH = keyH;
 		
 		screenX = gp.screenWidth/2 - (gp.tileSize/2);
 		screenY = gp.screenHeight/2 - (gp.tileSize/2);
 		
 		solidArea = new Rectangle();							// Here we decide the size of hitbox char
-		solidArea.x= 8;
-		solidArea.y = 16;
+		solidArea.x= 10;
+		solidArea.y = 18;
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;
 		
-		solidArea.width = 32;
-		solidArea.height = 32;
+		solidArea.width = 28;
+		solidArea.height = 28;
 				
 		
 	//	System.out.print(solidArea.width);
@@ -52,23 +52,18 @@ public class Player extends Entity{
 	
 	public void getPlayerImage() {
 		
-		try {
-			up1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_1.png"));
-			up2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_2.png"));
-			right1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_right_1.png"));
-			right2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_right_2.png"));
-			left1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_left_1.png"));
-			left2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_left_2.png"));
-			down1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_down_1.png"));
-			down2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_down_2.png"));
-			
-		}catch(IOException e) {
-				e.printStackTrace();
-				System.out.println("error player");
-				
-			
-		}
+		
+		up1 = setup("/player/boy_up_1");
+		up2 = setup("/player/boy_up_2");
+		right1 = setup("/player/boy_right_1");
+		right2 = setup("/player/boy_right_2");
+		left1 = setup("/player/boy_left_1");
+		left2 = setup("/player/boy_left_2");
+		down1 = setup("/player/boy_down_1");
+		down2 = setup("/player/boy_down_2");
+		poke = setup("/NPC/poke");
 	}
+	
 	
 	
 	public void update() {
@@ -88,17 +83,25 @@ public class Player extends Entity{
 				direction = "right";
 			}
 			
-											// Check tile collision 
+		// >>>>>>>>>>>>>>>  Check tile collision  <<<<<<<<<<<<<<<<<<<<<<
+			
 			collisionOn = false;
 			gp.cChecker.checkTile(this);
 			
 			
-											// Check object collision
-			int objIndex = gp.cChecker.checkObject(this, true);
+		// >>>>>>>>>>>>>>>>>>>  Check object collision <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 			
+			int objIndex = gp.cChecker.checkObject(this, true);
 			pickUpObject(objIndex);
 			
-											// If collision is false, player can move  
+		// >>>>>>>>>>>>>>>>>>> Check NPC Collision <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+			
+			int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+			interactNPC(npcIndex);
+			
+			
+			
+		// If collision is false, player can move  
 			if(collisionOn == false) {
 				switch(direction) {
 				case "up":
@@ -126,52 +129,27 @@ public class Player extends Entity{
 				}
 				spriteCounter = 0;
 			}
-			
 		}
-
-		
 	}
+	
 	
 	public void pickUpObject(int i) {
 		
 		if(i != 999) {
-			String objectName = gp.obj[i].name;
-			
-			switch(objectName) {
-			case "key":
-				gp.playSE(1);
-				hasKey++;
-				gp.obj[i] = null;
-				gp.ui.showMessage("you got Key!");
-				break;
-			case "chest":
-				if(hasKey > 0) {
-					gp.playSE(2);
-					gp.obj[i] = null;						// remove obj if have a key
-					hasKey--;
-					gp.ui.showMessage("you open the chest!");
-				}
-				else {
-					gp.ui.showMessage("You need key to open this shit!");
-				}
-				break;
-			case "boot":
-				gp.playSE(0);
-				speed += 2;
-				gp.obj[i] = null;
-				gp.ui.showMessage("OH YEAHHHHHHHH BABY!!!!!!");
-				break;
-				
-			case "door":
-				gp.ui.showMessage("Fuckkk");
-				gp.ui.gameFinnished = true;
-				gp.stopMusic();
-				gp.playSE(6);
-				break;
 
-			
+		} 
+	}
+	
+	public void interactNPC(int i) {
+		
+		if(i != 999) {
+			//System.out.println("NPC!!");
+			if (gp.keyH.enterPressed == true) {
+				gp.gameState = gp.dialogueState;
+				gp.npc[i].speak();
 			}
 		}
+		gp.keyH.enterPressed = false; 
 	}
 	
 	public void draw(Graphics2D g2) {
@@ -219,7 +197,7 @@ public class Player extends Entity{
 			break;
 		}
 		
-		g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+		g2.drawImage(image, screenX, screenY, null);
 		g2.setColor(Color.red);
 		g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
 		

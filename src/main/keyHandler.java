@@ -4,9 +4,17 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class keyHandler implements KeyListener {
-
-public boolean upPressed, downPressed, leftPressed, rightPressed;
 	
+	GamePanel gp;
+	public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed;
+	
+
+	public keyHandler(GamePanel gp) {
+		
+		this.gp = gp;
+	}
+
+
 	@Override
 	public void keyTyped(KeyEvent e) {
 	}
@@ -15,22 +23,80 @@ public boolean upPressed, downPressed, leftPressed, rightPressed;
 	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
 		
-		if(code == KeyEvent.VK_W) {
-			upPressed = true;
+		// <<<<<<<<<<<<<<<<<<<<<<<< TITLE STATE >>>>>>>>>>>>>>>>>>>>>>>>
+		
+		if (gp.gameState == gp.titleState) {
+			if(code == KeyEvent.VK_W) {
+				gp.ui.commandNum--;
+				if (gp.ui.commandNum < 0) {
+					gp.ui.commandNum = 2;
+				}
+			}
+			if(code == KeyEvent.VK_S) {
+				gp.ui.commandNum++;
+				if (gp.ui.commandNum > 2) {
+					gp.ui.commandNum = 0;
+				}
+
+			}
+			if (code == KeyEvent.VK_ENTER) {
+				if (gp.ui.commandNum == 0) {
+					gp.gameState = gp.playState;
+					gp.playMusic(7);
+				}
+				
+				if (gp.ui.commandNum == 1) {
+					// 
+					
+				}
+				
+				if (gp.ui.commandNum == 2) {
+					System.exit(0);
+				}
+			}
+			
 		}
 		
-		if(code == KeyEvent.VK_S) {
-			downPressed = true;
+		// <<<<<<<<<<<<<<<<<<<<<<<< PLAY STATE >>>>>>>>>>>>>>>>>>>>>>>>
+		
+		if (gp.gameState == gp.playState) {
+			
+
+			if(code == KeyEvent.VK_W) {
+				upPressed = true;
+			}
+			if(code == KeyEvent.VK_S) {
+				downPressed = true;
+			}
+			if(code == KeyEvent.VK_A) {
+				leftPressed = true;
+			}
+			if(code == KeyEvent.VK_D) {
+				rightPressed = true;
+			}
+			if(code == KeyEvent.VK_P) {				// Press "P" for Pause the game
+				gp.gameState = gp.pauseState;
+			}
+			if(code == KeyEvent.VK_ENTER) {
+				enterPressed = true;
+			}
+
 		}
 		
-		if(code == KeyEvent.VK_A) {
-			leftPressed = true;
+		// <<<<<<<<<<<<<<<<<<<<<<<< PAUSE STATE >>>>>>>>>>>>>>>>>>>>>>>>
+		
+		else if (gp.gameState == gp.pauseState) {
+			if(code == KeyEvent.VK_P) {
+				gp.gameState = gp.playState;
+			}
 		}
-
-		if(code == KeyEvent.VK_D) {
-			rightPressed = true;
+		// <<<<<<<<<<<<<<<<<<<<<<<< DIALOGUE STATE >>>>>>>>>>>>>>>>>>>>>>>>
+		else if (gp.gameState == gp.dialogueState) {
+			if(code == KeyEvent.VK_ENTER) {
+				gp.gameState = gp.playState;
+			}
 		}
-
+		
 	}
 
 	@Override
