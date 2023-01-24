@@ -6,17 +6,20 @@ import javax.imageio.ImageIO;
 
 import main.GamePanel;
 
-public class objCampfire extends SuperObject{
+public class objBoot extends SuperObject {
 	
 	GamePanel gp;
-	public objCampfire(GamePanel gp) {
+	public objBoot(GamePanel gp) {
 		
-		name = "campfire";
+		name = "boot";
 		try {
-			image =  ImageIO.read(getClass().getResourceAsStream("/objects/campfire.gif"));
+			image =  ImageIO.read(getClass().getResourceAsStream("/objects/boots.png"));
 			uTools.scaleImage(image, gp.tileSize, gp.tileSize);
+			
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
 	}
+	
+
 }

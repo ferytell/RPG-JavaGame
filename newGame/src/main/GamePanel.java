@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
+import entity.Entity;
 import entity.Player;
 import object.SuperObject;
 import object.objCoin;
@@ -31,24 +32,44 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	// World setting
 	
-	public final int maxWorldCol = 70;
-	public final int maxWorldRow = 70;
+	public final int maxWorldCol = 250;
+	public final int maxWorldRow = 250;
 	public final int worldWidth = tileSize * maxWorldCol;
 	public final int worldHeight = tileSize * maxWorldRow;
 
 	
 	
 	// FPS setting
+	
 	int FPS = 60;
 	
+	// STSTEM >>>
+	
 	TileManager tileMan = new TileManager(this);
-	keyHandler keyH = new keyHandler();
-	Thread gameThread;
+	public keyHandler keyH = new keyHandler(this);
+	Sounds music = new Sounds();
+	Sounds soundEffect = new Sounds();
 	public collisionChecker cChecker = new collisionChecker(this);
 	public AssetSetter aSetter = new AssetSetter(this); 
+	public UI ui = new UI(this);
+	Thread gameThread;
+	
+	
+	
+	
+	// ENTITY AND OBJECT >>>>>>>>>
 	
 	public Player player = new Player(this, keyH);
 	public SuperObject obj[] = new SuperObject[10]; 				// number of obj that can be displayed
+	public Entity npc[] = new Entity[10];
+	
+	// >>>>>>>>>>>>> GAME STATE <<<<<<<<<<<<<<<<<<<<
+	
+	public int gameState;
+	public final int titleState = 0;
+	public final int playState = 1;
+	public final int pauseState = 2;
+	public final int dialogueState = 3;
 	
 
 	
@@ -63,7 +84,14 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	public void setupGame() {
 		aSetter.setObject(); 
-	}
+		aSetter.setNPC();
+	//	playMusic(7);
+	//	stopMusic();
+		gameState = titleState;
+		
+
+		
+	}	
 	
 	public void startGameThread() {
 		
@@ -98,12 +126,25 @@ public class GamePanel extends JPanel implements Runnable{
 			// Draw the screen with the updated information
 			//repaint();
 		}
-		
 	}
 	
 	
 	public void update() {
-		player.update();
+		
+		if(gameState == playState) {
+			
+			player.update();
+			
+			for(int i = 0; i < npc.length; i++) {
+				if(npc[i] != null) {
+					npc[i].update();
+				}
+			}
+		}
+		if(gameState == pauseState) {
+			// nothing
+		}
+		
 //		objCoin.update();
 	}
 
@@ -113,25 +154,59 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		Graphics2D g2 = (Graphics2D)g;
 		
-		// Tile draw
+		// <<<<<<<<<<<<<<<< TITLE SCREEN  >>>>>>>>>>>>>>>>
 		
-		tileMan.draw(g2);
-		
-		// object draw
-		
-		for(int i = 0; i < obj.length; i++) {
-			if(obj[i] != null) {
-				obj[i].draw(g2, this);
-			}
+		if (gameState == titleState) {
+			ui.draw(g2);
 		}
+		else {
+			// <<<<<<<<<<<<<<<< Tile draw  >>>>>>>>>>>>>>>>
+			
+			tileMan.draw(g2);
+			
+			// <<<<<<<<<<<<< object draw >>>>>>>>>>>>>>>>
+			
+			for(int i = 0; i < obj.length; i++) {
+				if(obj[i] != null) {
+					obj[i].draw(g2, this);
+				}
+			}
+
+			// >>>>>>>>>>>>>>>>>>> NPC draw <<<<<<<<<<<<<<<<<<<<
+			for(int i = 0; i < npc.length; i++) {
+				if(npc[i] != null) {
+					npc[i].draw(g2);
+				}
+			}
+			
+			// >>>>>>>>>>>>>>>>>>> Player draw <<<<<<<<<<<<<<<<<<<<
+			player.draw(g2);
+			
+			// <<<<<<<<<<<<<<<<<<< UI >>>>>>>>>>>>>>>>>>>>
+			ui.draw(g2);
+			
+			g2.dispose();
 		
-		// Player draw
-		player.draw(g2);
+			
+		}
+	}
+	
+	public void playMusic(int i) {
 		
-		
-		g2.dispose();
+		music.setFile(i);
+		music.play();
+		music.loop();
 	}
 
+	public void stopMusic() {
+		music.stop();
+	}
+	
+	public void playSE(int i) {
+		
+		soundEffect.setFile(i);
+		soundEffect.play();
+	}
 	
 	
 	
