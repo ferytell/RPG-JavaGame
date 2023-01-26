@@ -16,16 +16,26 @@ public class Entity {
 	public int worldX, worldY;
 	public int speed;
 	
-	public BufferedImage up1, up2, right1, right2, left1, left2, down1, down2, poke;
-	public String direction;
+	public BufferedImage up1, up2, right1, right2, left1, left2, down1, down2, poke, image, image2, image3;
+	public String direction = "down";
 	public int spriteCounter = 0;
 	public int spriteNum = 1;
 	public Rectangle solidArea = new Rectangle(0, 0, 48, 48);						// for hitbox
 	public int solidAreaDefaultX, solidAreaDefaultY;
 	public boolean collisionOn = false;
 	public int actionLockCounter = 0;
+	public boolean invincible = false;
+	public int invincibleCounter = 0;
 	String dialogue[] = new String[20];
 	int dialogueIndex = 0;
+	public String name;
+	public boolean collision = false;
+	public int type;						// 0: player, 1: NPC, 2: Monster
+	
+	// >>>>>>>>>>>>>>>>>>>>>>> CHAR STATS <<<<<<<<<<<<<<<<<<<<<<<<<
+	
+	public int maxLife;
+	public int life;
 	
 	public Entity(GamePanel gp) {
 		this.gp = gp;
@@ -60,8 +70,16 @@ public class Entity {
 		collisionOn = false;
 		gp.cChecker.checkTile(this);
 		gp.cChecker.checkObject(this, false);
-		gp.cChecker.checkPlayer(this);
+		gp.cChecker.checkEntity(this, gp.npc);
+		gp.cChecker.checkEntity(this, gp.monster);
+		boolean contactPlayer = gp.cChecker.checkPlayer(this);
 
+		if (this.type == 2 && contactPlayer == true) {
+			if (gp.player.invincible == false) {
+				gp.player.life -= 1;
+				gp.player.invincible = true;
+			}
+		}
 		
 		// If collision is false, player can move  
 		if(collisionOn == false) {
@@ -142,8 +160,6 @@ public class Entity {
 			g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
 		}
 	}
-	
-	
 	
 	
 	public BufferedImage setup(String imagePath) {

@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 
+import entity.Entity;
+import object.objHeart;
 import object.objKey;
 
 public class UI {
@@ -17,13 +19,15 @@ public class UI {
 	GamePanel gp;
 	Graphics2D g2;
 	Font maruMonica, purisaBold, papyrus;
+	BufferedImage heart_full, heart_half, heart_blank;
 
 	public boolean messageOn = false;
 	public boolean gameFinnished = false;
 	public String message = "";
 	int messageCounter = 0;
 	public String currentDialogue = "";
-	public int commandNum = 0; 
+	public int commandNum = 0;
+	public int titleScreenState = 0;   // 0: about
 	
 //	double playTime;
 	
@@ -49,6 +53,13 @@ public class UI {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		// Create HUD Object
+		
+		Entity heart =  new objHeart(gp);
+		heart_full = heart.image;
+		heart_half = heart.image2;
+		heart_blank = heart.image3;
 	}
 	
 	public void showMessage(String text) {
@@ -73,7 +84,7 @@ public class UI {
 		
 		// >>>>>>>>>>>>  PLAY STATE  <<<<<<<<<<<<<<<<<<<<<<<
 		if(gp.gameState == gp.playState) {
-					
+			drawPlayerLife();
 			//System.out.println(gp.gameState);
 		}
 		
@@ -81,71 +92,164 @@ public class UI {
 		
 		if(gp.gameState == gp.pauseState) {
 			drawPauseScreen();
+			drawPlayerLife();
 			//System.out.println(gp.gameState);
 		}
 		
 		// >>>>>>>>>>>>  DiALOGUE STATE  <<<<<<<<<<<<<<<<<<<<<<<
 		 if (gp.gameState == gp.dialogueState) {
+			 drawPlayerLife();
 			 drawDialogueScreen();
+			 
 		 }
 	}
+	
+	public void drawPlayerLife() {
 		
+		int x = gp.tileSize/2;
+		int y = gp.tileSize/2;
+		int i = 0;
+		
+		// >>>>>>>>>>>>  DRAW MAX LIFE  <<<<<<<<<<<<<<<<<
+		while (i < gp.player.maxLife / 2) {
+			g2.drawImage(heart_blank, x, y, null);
+			i++;
+			x += gp.tileSize;
+		}
+		
+		// >>>>>>>>>>>>  RESET  <<<<<<<<<<<<<<<<<
+		
+		x = gp.tileSize/2;
+		y = gp.tileSize/2;
+		i = 0;
+				
+		// >>>>>>>>>>>>  DRAW CURRENT LIFE  <<<<<<<<<<<<<<<<<
+		
+		while (i < gp.player.life) {
+			g2.drawImage(heart_half, x, y, null);
+			i++;
+			if (i < gp.player.life) {
+				g2.drawImage(heart_full, x, y, null);
+			}
+			i++;
+			x += gp.tileSize;
+		}
+		
+		
+		
+	}
+	
+	
+	
+	
 	public void drawTitleScreen() {
 		
-		g2.setColor(new Color(2, 12, 8));
-		g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+		if (titleScreenState == 0) {
+
+			g2.setColor(new Color(2, 12, 8));
+			g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+			
+			// TITLE NAME
+			g2.setFont(g2.getFont().deriveFont(Font.PLAIN,25f));
+			String text = "THE  LEGEND  OF  TOKENENK ";
+			int x = getXforCenterText(text);
+			int y = gp.tileSize * 3;
+			
+			// SHADOW
+			g2.setColor(Color.GRAY);
+			g2.drawString(text, x+5, y+5);
+			// MAIN FONT COLOR
+			g2.setColor(Color.WHITE);
+			g2.drawString(text, x, y);
+			
+			// MAIN IMAGE
+			x =	gp.screenWidth/2 - (gp.tileSize * 2) / 2;
+			y += gp.tileSize * 2;
+			g2.drawImage(gp.player.poke, x, y, gp.tileSize*2, gp.tileSize*2, null);
+			
+			// MAIN MENU
+			g2.setFont(g2.getFont().deriveFont(Font.PLAIN,15f));
+			
+			text = "NEW GAME";
+			x = getXforCenterText(text);
+			y += gp.tileSize * 3;
+			g2.drawString(text, x, y);
+			if (commandNum == 0) {
+				g2.drawString(">", x - gp.tileSize, y);
+			//	g2.setColor(Color.RED);
+			//	g2.drawString(text, x+2, y+2);
+			}
+			
+			text = "LOAD GAME";
+			x = getXforCenterText(text);
+			y += gp.tileSize;
+			g2.drawString(text, x, y);
+			if (commandNum == 1) {
+				g2.drawString(">", x - gp.tileSize, y);
+			//	g2.setColor(Color.RED);
+			//	g2.drawString(text, x+2, y+2);
+			}
+			
+			text = "QUIT";
+			x = getXforCenterText(text);
+			y += gp.tileSize;
+			g2.drawString(text, x, y);
+			if (commandNum == 2) {
+				g2.drawString(">", x - gp.tileSize, y);
+			//	g2.setColor(Color.RED);
+			//	g2.drawString(text, x+2, y+2);
+			}
 		
-		// TITLE NAME
-		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,25f));
-		String text = "THE  LEGEND  OF  TOKENENK ";
-		int x = getXforCenterText(text);
-		int y = gp.tileSize * 3;
-		
-		// SHADOW
-		g2.setColor(Color.GRAY);
-		g2.drawString(text, x+5, y+5);
-		// MAIN FONT COLOR
-		g2.setColor(Color.WHITE);
-		g2.drawString(text, x, y);
-		
-		// MAIN IMAGE
-		x =	gp.screenWidth/2 - (gp.tileSize * 2) / 2;
-		y += gp.tileSize * 2;
-		g2.drawImage(gp.player.poke, x, y, gp.tileSize*2, gp.tileSize*2, null);
-		
-		// MAIN MENU
-		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,15f));
-		
-		text = "NEW GAME";
-		x = getXforCenterText(text);
-		y += gp.tileSize * 3;
-		g2.drawString(text, x, y);
-		if (commandNum == 0) {
-			g2.drawString(">", x - gp.tileSize, y);
-		//	g2.setColor(Color.RED);
-		//	g2.drawString(text, x+2, y+2);
 		}
-		
-		text = "LOAD GAME";
-		x = getXforCenterText(text);
-		y += gp.tileSize;
-		g2.drawString(text, x, y);
-		if (commandNum == 1) {
-			g2.drawString(">", x - gp.tileSize, y);
-		//	g2.setColor(Color.RED);
-		//	g2.drawString(text, x+2, y+2);
+		else if (titleScreenState == 1) {
+			// CLASS SELECTION SCREEN
+			
+			g2.setColor(Color.WHITE);
+			g2.setFont(g2.getFont().deriveFont(30F));
+			
+			String text = "Select Your Class !!";
+			int x = getXforCenterText(text);
+			int y = gp.tileSize * 3;
+			g2.drawString(text, x, y);
+			
+			g2.setFont(g2.getFont().deriveFont(25F));
+			text = "Fighter";
+			x = getXforCenterText(text);
+			y += gp.tileSize * 2;
+			g2.drawString(text, x, y);
+			if (commandNum == 0) {
+				g2.drawString(">", x - gp.tileSize, y);
+			}
+			
+			text = "Assasins";
+			x = getXforCenterText(text);
+			y += gp.tileSize * 1;
+			g2.drawString(text, x, y);
+			if (commandNum == 1) {
+				g2.drawString(">", x - gp.tileSize, y);
+			}
+
+			text = "Sorcerer";
+			x = getXforCenterText(text);
+			y += gp.tileSize * 1;
+			g2.drawString(text, x, y);
+			if (commandNum == 2) {
+				g2.drawString(">", x - gp.tileSize, y);
+			}
+			
+			
+			g2.setFont(g2.getFont().deriveFont(20F));
+			text = "Back";
+			x = getXforCenterText(text);
+			y += gp.tileSize * 2;
+			g2.drawString(text, x, y);
+			if (commandNum == 3) {
+				g2.drawString(">", x - gp.tileSize, y);
+			}
+
+			
+					
 		}
-		
-		text = "QUIT";
-		x = getXforCenterText(text);
-		y += gp.tileSize;
-		g2.drawString(text, x, y);
-		if (commandNum == 2) {
-			g2.drawString(">", x - gp.tileSize, y);
-		//	g2.setColor(Color.RED);
-		//	g2.drawString(text, x+2, y+2);
-		}
-		
 	}
 	public void drawPauseScreen() {
 		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,20f));

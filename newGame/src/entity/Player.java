@@ -1,6 +1,7 @@
 package entity;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -47,6 +48,10 @@ public class Player extends Entity{
 		worldY = gp.tileSize * 10;
 		speed = 4;
 		direction = "down";
+		
+		// PLAYER STATS
+		maxLife = 6;
+		life = maxLife;
 		
 	}
 	
@@ -98,8 +103,17 @@ public class Player extends Entity{
 			
 			int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
 			interactNPC(npcIndex);
+		
+		// >>>>>>>>>>>>>>>>>>> Check Monster Collision <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+				
+			int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
+			contactMonster(monsterIndex);
+		
 			
+		// >>>>>>>>>>>>>>>>>>> Check Event <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+			gp.eHandler.checkEvent();
 			
+			gp.keyH.enterPressed = false; 
 			
 		// If collision is false, player can move  
 			if(collisionOn == false) {
@@ -130,6 +144,14 @@ public class Player extends Entity{
 				spriteCounter = 0;
 			}
 		}
+		
+		if (invincible == true) {
+			invincibleCounter ++;
+			if (invincibleCounter > 60) {
+				invincible = false;
+				invincibleCounter = 0;
+			}
+		}
 	}
 	
 	
@@ -149,9 +171,19 @@ public class Player extends Entity{
 				gp.npc[i].speak();
 			}
 		}
-		gp.keyH.enterPressed = false; 
+		
 	}
-	
+	public void contactMonster(int i) {
+		
+		if (i != 999) {
+			if (invincible == false) {
+				life -= 1;
+				invincible = true;
+			}
+			
+			
+		}
+	}
 	public void draw(Graphics2D g2) {
 		
 //		g2.setColor(Color.blue);
@@ -201,6 +233,12 @@ public class Player extends Entity{
 		g2.setColor(Color.red);
 		g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
 		
+		
+		// DEBUGGING
+		
+		g2.setFont(new Font("Arial", Font.PLAIN, 26));
+		g2.setColor(Color.WHITE);
+		g2.drawString("invincible: " + invincibleCounter, 10, 400);
 	}
 
 }

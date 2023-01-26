@@ -4,9 +4,10 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+import entity.Entity;
 import main.GamePanel;
 
-public class objCoin extends SuperObject {
+public class objCoin extends Entity {
 	
 	public BufferedImage img1, img2, img3, img4;
 	public static int spriteCounter = 0;
@@ -15,26 +16,16 @@ public class objCoin extends SuperObject {
 	
 	public objCoin(GamePanel gp) {
 		
+		super(gp);
+		
 		name = "coin";
-		getCoinImage();
+		
+		img2 = setup("/objects/coin_2.png");
+		img3 = setup("/objects/coin_3.png");
+		img4 = setup("/objects/coin_4.png");
+		img1 = setup("/objects/coin_1.png");
+		
 		update();
-		
-	}
-	
-	public void getCoinImage() {
-		try {
-			img1 =  ImageIO.read(getClass().getResourceAsStream("/objects/coin_1.png"));
-			uTools.scaleImage(img1, 42, 42);
-			img2 =  ImageIO.read(getClass().getResourceAsStream("/objects/coin_2.png"));
-			uTools.scaleImage(img2, 42, 42);
-			img3 =  ImageIO.read(getClass().getResourceAsStream("/objects/coin_3.png"));
-			uTools.scaleImage(img3, 42, 42);
-			img4 =  ImageIO.read(getClass().getResourceAsStream("/objects/coin_4.png"));
-			uTools.scaleImage(img4, 42, 42);
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-		
 	}
 	
 	public void update() {
