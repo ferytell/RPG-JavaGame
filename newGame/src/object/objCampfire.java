@@ -9,6 +9,6 @@ public class objCampfire extends Entity{
 	public objCampfire(GamePanel gp) {
 		super(gp);
 		name = "campfire";
-		down1 = setup("/objects/campfire.gif");
+		down1 = setup("/objects/campfire.gif", gp.tileSize, gp.tileSize);
 	}
 }

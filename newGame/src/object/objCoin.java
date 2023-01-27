@@ -20,10 +20,10 @@ public class objCoin extends Entity {
 		
 		name = "coin";
 		
-		img2 = setup("/objects/coin_2.png");
-		img3 = setup("/objects/coin_3.png");
-		img4 = setup("/objects/coin_4.png");
-		img1 = setup("/objects/coin_1.png");
+		img2 = setup("/objects/coin_2.png", gp.tileSize, gp.tileSize);
+		img3 = setup("/objects/coin_3.png", gp.tileSize, gp.tileSize);
+		img4 = setup("/objects/coin_4.png", gp.tileSize, gp.tileSize);
+		img1 = setup("/objects/coin_1.png", gp.tileSize, gp.tileSize);
 		
 		update();
 	}

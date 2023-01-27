@@ -10,6 +10,6 @@ public class objKey extends Entity{
 		super(gp);
 			
 		name = "key";
-		down1 = setup("/objects/keys_1_1.png");
+		down1 = setup("/objects/keys_1_1.png", gp.tileSize, gp.tileSize);
 	}
 }

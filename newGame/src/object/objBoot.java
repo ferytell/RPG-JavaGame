@@ -8,7 +8,7 @@ public class objBoot extends Entity {
 	public objBoot(GamePanel gp) {
 		super(gp);
 		name = "boot";
-		down1 = setup("/objects/boots");
+		down1 = setup("/objects/boots", gp.tileSize, gp.tileSize);
 	}
 	
 
