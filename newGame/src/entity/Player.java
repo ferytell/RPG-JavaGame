@@ -21,6 +21,8 @@ public class Player extends Entity{
 	
 	public final int screenX;
 	public final int screenY;
+	public boolean attackCanceled = false;
+	
 			
 	public Player(GamePanel gp, keyHandler keyH) {
 		super(gp);
@@ -144,6 +146,15 @@ public class Player extends Entity{
 					worldX += speed; break;
 				}
 			}
+			
+
+			if (keyH.enterPressed == true && attackCanceled == false) {
+				gp.playSE(2);
+				attacking = true;
+				spriteCounter = 0;
+			}
+			attackCanceled = false;
+			
 			gp.keyH.enterPressed = false; 
 			
 			spriteCounter++;
@@ -227,13 +238,10 @@ public class Player extends Entity{
 						
 			if(i != 999) {
 				//System.out.println("NPC!!");
+				attackCanceled = true;
 				gp.gameState = gp.dialogueState;
 				gp.npc[i].speak();
-				}
-			
-			else {
-				attacking = true;
-			}
+				}   
 		}
 		
 		
@@ -243,6 +251,7 @@ public class Player extends Entity{
 		
 		if (i != 999) {
 			if (invincible == false) {
+				gp.playSE(10);
 				life -= 1;
 				invincible = true;
 			}
@@ -256,9 +265,10 @@ public class Player extends Entity{
 		if (i != 999) {
 			
 			if (gp.monster[i].invincible == false) {
-			
+				gp.playSE(8);			
 				gp.monster[i].life -= 1;
 				gp.monster[i].invincible =true;
+				gp.monster[i].damageReaction();
 				
 				if (gp.monster[i].life <= 0) {
 					gp.monster[i].dying = true;
@@ -284,7 +294,7 @@ public class Player extends Entity{
 				if (spriteNum == 1) {image = up1;}
 				if (spriteNum == 2) {image = up2;}	
 			}
-			if (attacking == true) {
+			else if (attacking == true) {
 				tempScreenY = screenY - gp.tileSize;
 				if (spriteNum == 1) {image = attackUp1;}
 				if (spriteNum == 2) {image = attackUp2;}
@@ -295,7 +305,7 @@ public class Player extends Entity{
 				if (spriteNum == 1) {image = down1;}
 				if (spriteNum == 2) {image = down2;}		
 			}
-			if (attacking == true) {
+			else if (attacking == true) {
 				if (spriteNum == 1) {image = attackDown1;}
 				if (spriteNum == 2) {image = attackDown2;}
 			}
@@ -305,7 +315,7 @@ public class Player extends Entity{
 				if (spriteNum == 1) {image = left1;}
 				if (spriteNum == 2) {image = left2;}				
 			}
-			if (attacking == true) {
+			else if (attacking == true) {
 				tempScreenX = screenX - gp.tileSize;
 				if (spriteNum == 1) {image = attackLeft1;}
 				if (spriteNum == 2) {image = attackLeft2;}
@@ -316,7 +326,7 @@ public class Player extends Entity{
 				if (spriteNum == 1) {image = right1;}
 				if (spriteNum == 2) {image = right2;}				
 			}
-			if (attacking == true) {
+			else if (attacking == true) {
 				if (spriteNum == 1) {image = attackRight1;}
 				if (spriteNum == 2) {image = attackRight2;}
 			}

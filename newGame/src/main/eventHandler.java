@@ -87,6 +87,7 @@ public class eventHandler {
 		gp.gameState = gameState;
 		gp.ui.currentDialogue = "you step on a shit";
 		gp.player.life -= 1;
+		gp.playSE(2);
 //		eventRect[col] [row].eventDone = true;
 		canTouchEvent = false;
 	}
@@ -94,6 +95,7 @@ public class eventHandler {
 	public void healingArea(int col, int row, int gameState) {
 		if (gp.keyH.enterPressed == true) {
 			gp.gameState = gameState;
+			gp.player.attackCanceled = true; 
 			gp.ui.currentDialogue = "healing virtue";
 			gp.player.life = gp.player.maxLife;
 		}
