@@ -87,7 +87,7 @@ public class eventHandler {
 		gp.gameState = gameState;
 		gp.ui.currentDialogue = "you step on a shit";
 		gp.player.life -= 1;
-		gp.playSE(2);
+		gp.playSE(10);
 //		eventRect[col] [row].eventDone = true;
 		canTouchEvent = false;
 	}

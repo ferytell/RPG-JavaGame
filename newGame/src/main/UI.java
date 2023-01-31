@@ -88,7 +88,7 @@ public class UI {
 			//System.out.println(gp.gameState);
 		}
 		
-		// >>>>>>>>>>>>  PAUSE STATE  <<<<<<<<<<<<<<<<<<<<<<<
+		// >>>>>>>>><<<<<<<<<>>>  PAUSE STATE  <<<<<<<<<<<<<<<<<<<<<<<
 		
 		if(gp.gameState == gp.pauseState) {
 			drawPauseScreen();
@@ -96,12 +96,16 @@ public class UI {
 			//System.out.println(gp.gameState);
 		}
 		
-		// >>>>>>>>>>>>  DiALOGUE STATE  <<<<<<<<<<<<<<<<<<<<<<<
+		// >>>>>>>>>>>>>>>>>>>>>>>>>>>  DiALOGUE STATE  <<<<<<<<<<<<<<<<<<<<<<<
 		 if (gp.gameState == gp.dialogueState) {
 			 drawPlayerLife();
 			 drawDialogueScreen();
-			 
 		 }
+		 
+		// >>>>>>>>>>>>>>>>>>  CHARACTER STATE  <<<<<<<<<<<<<<<<<<<<<<<
+		 if (gp.gameState == gp.characterState) {		 
+			drawCharacterScreen();
+		}
 	}
 	
 	public void drawPlayerLife() {
@@ -134,14 +138,7 @@ public class UI {
 			i++;
 			x += gp.tileSize;
 		}
-		
-		
-		
 	}
-	
-	
-	
-	
 	public void drawTitleScreen() {
 		
 		if (titleScreenState == 0) {
@@ -153,7 +150,7 @@ public class UI {
 			g2.setFont(g2.getFont().deriveFont(Font.PLAIN,25f));
 			String text = "THE  LEGEND  OF  TOKENENK ";
 			int x = getXforCenterText(text);
-			int y = gp.tileSize * 3;
+			int y = gp.tileSize * 2;
 			
 			// SHADOW
 			g2.setColor(Color.GRAY);
@@ -164,10 +161,11 @@ public class UI {
 			
 			// MAIN IMAGE
 			x =	gp.screenWidth/2 - (gp.tileSize * 2) / 2;
-			y += gp.tileSize * 2;
+			y += gp.tileSize * 1;
 			g2.drawImage(gp.player.poke, x, y, gp.tileSize*2, gp.tileSize*2, null);
 			
-			// MAIN MENU
+			// :>>>>>>>>>>>>>>>>>>>>>>>>>>>> MAIN MENU <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+			
 			g2.setFont(g2.getFont().deriveFont(Font.PLAIN,15f));
 			
 			text = "NEW GAME";
@@ -190,11 +188,31 @@ public class UI {
 			//	g2.drawString(text, x+2, y+2);
 			}
 			
-			text = "QUIT";
+			text = "OPTIONS";
 			x = getXforCenterText(text);
 			y += gp.tileSize;
 			g2.drawString(text, x, y);
 			if (commandNum == 2) {
+				g2.drawString(">", x - gp.tileSize, y);
+			//	g2.setColor(Color.RED);
+			//	g2.drawString(text, x+2, y+2);
+			}
+			
+			text = "CREDITS";
+			x = getXforCenterText(text);
+			y += gp.tileSize;
+			g2.drawString(text, x, y);
+			if (commandNum == 3) {
+				g2.drawString(">", x - gp.tileSize, y);
+			//	g2.setColor(Color.RED);
+			//	g2.drawString(text, x+2, y+2);
+			}
+			
+			text = "QUIT";
+			x = getXforCenterText(text);
+			y += gp.tileSize;
+			g2.drawString(text, x, y);
+			if (commandNum == 4) {
 				g2.drawString(">", x - gp.tileSize, y);
 			//	g2.setColor(Color.RED);
 			//	g2.drawString(text, x+2, y+2);
@@ -250,6 +268,28 @@ public class UI {
 			
 					
 		}
+		
+		else if (titleScreenState == 3) {
+			
+			g2.setColor(Color.WHITE);
+			g2.setFont(g2.getFont().deriveFont(30F));
+			
+			String text = "The Legends of Tokeneng";
+			int x = getXforCenterText(text);
+			int y = gp.tileSize * 3;
+			g2.drawString(text, x, y);
+			
+			
+			g2.setColor(Color.WHITE);
+			g2.setFont(g2.getFont().deriveFont(20F));
+			text = "Version : 0.1.1"; x = getXforCenterText(text); y += gp.tileSize * 1; g2.drawString(text, x, y);
+			text = "Programing : Ferytell"; x = getXforCenterText(text); y += gp.tileSize * 1; g2.drawString(text, x, y);
+			text = "Design : Ferytell"; x = getXforCenterText(text); y += gp.tileSize * 1; g2.drawString(text, x, y);
+			text = "Graphic : Ferytell"; x = getXforCenterText(text); y += gp.tileSize * 1; g2.drawString(text, x, y);
+			text = "Music : Ferytell"; x = getXforCenterText(text); y += gp.tileSize * 1; g2.drawString(text, x, y);
+
+		}
+		
 	}
 	public void drawPauseScreen() {
 		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,20f));
@@ -259,8 +299,6 @@ public class UI {
 		
 		g2.drawString(text, x, y);
 	}
-	
-	
 	public void drawDialogueScreen() {
 		// Window screen
 		int x = gp.tileSize * 2;
@@ -280,6 +318,109 @@ public class UI {
 		
 	}
 	
+	public void drawCharacterScreen() {
+		// CREATE FRAME
+		final int frameX = gp.tileSize * 2;
+		final int frameY = gp.tileSize;
+		final int frameWidth = gp.tileSize * 5;
+		final int frameHeight = gp.tileSize * 10;
+		
+		drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+		
+		// TEXT
+		
+		g2.setColor(Color.WHITE);
+		g2.setFont(g2.getFont().deriveFont(32F));
+		
+		int textX = frameX + 20;
+		int textY =  frameY + gp.tileSize;
+		final int lineHeight = 35;
+		
+		// NAMES
+		
+		g2.drawString("Level", textX, textY);
+		textY += lineHeight;
+		g2.drawString("Life", textX, textY);
+		textY += lineHeight;
+		g2.drawString("Strength", textX, textY);
+		textY += lineHeight;
+		g2.drawString("Dexterity", textX, textY);
+		textY += lineHeight;
+		g2.drawString("Attack", textX, textY);
+		textY += lineHeight;
+		g2.drawString("Defense", textX, textY);
+		textY += lineHeight;
+		g2.drawString("Exp", textX, textY);
+		textY += lineHeight;
+		g2.drawString("Next Lv", textX, textY);
+		textY += lineHeight;
+		g2.drawString("Coin", textX, textY);
+		textY += lineHeight + 15;
+		g2.drawString("Weapon", textX, textY);
+		textY += lineHeight + 20;
+		g2.drawString("Shield", textX, textY);
+		textY += lineHeight;
+		
+		// VALUES
+		
+		int tailX = (frameX + frameWidth) - 30;
+		
+		// RESET textY
+		
+		textY =  frameY + gp.tileSize;
+		String value;
+		
+		value = String.valueOf(gp.player.level);
+		textX = getXforAlignToRightText(value, tailX);
+		g2.drawString(value, textX, textY);
+		textY += lineHeight;
+		
+		value = String.valueOf(gp.player.life + "/" + gp.player.maxLife);
+		textX = getXforAlignToRightText(value, tailX);
+		g2.drawString(value, textX, textY);
+		textY += lineHeight;
+		
+		value = String.valueOf(gp.player.strength);
+		textX = getXforAlignToRightText(value, tailX);
+		g2.drawString(value, textX, textY);
+		textY += lineHeight;
+		
+		value = String.valueOf(gp.player.dexterity);
+		textX = getXforAlignToRightText(value, tailX);
+		g2.drawString(value, textX, textY);
+		textY += lineHeight;
+		
+		value = String.valueOf(gp.player.attack);
+		textX = getXforAlignToRightText(value, tailX);
+		g2.drawString(value, textX, textY);
+		textY += lineHeight;
+		
+		value = String.valueOf(gp.player.defense);
+		textX = getXforAlignToRightText(value, tailX);
+		g2.drawString(value, textX, textY);
+		textY += lineHeight;
+		
+		value = String.valueOf(gp.player.exp);
+		textX = getXforAlignToRightText(value, tailX);
+		g2.drawString(value, textX, textY);
+		textY += lineHeight;
+		
+		value = String.valueOf(gp.player.nextLevelExp);
+		textX = getXforAlignToRightText(value, tailX);
+		g2.drawString(value, textX, textY);
+		textY += lineHeight;
+		
+		value = String.valueOf(gp.player.coin);
+		textX = getXforAlignToRightText(value, tailX);
+		g2.drawString(value, textX, textY);
+		textY += lineHeight - 15;
+		
+		g2.drawImage(gp.player.currentWeapon.down1, tailX - gp.tileSize, textY, null);
+		textY += lineHeight + 15;
+		g2.drawImage(gp.player.currentShield.down1, tailX - gp.tileSize, textY, null);
+		
+	}
+	
 	public void drawSubWindow(int x, int y, int width, int height) {
 		
 		Color c = new Color(12, 12, 12, 100); // >>>>>>>>>> RGB
@@ -292,12 +433,16 @@ public class UI {
 		g2.drawRoundRect(x+5, y+5, width - 10, height - 10, 25, 25);
 		
 	}
-	
 	public int getXforCenterText(String text) {
 		int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
 		int x = gp.screenWidth/2 - length/2;
 		return x;
 		
 	}
-	
+	public int getXforAlignToRightText(String text, int tailX) {
+		int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+		int x = tailX - length;
+		return x;
+		
+	}
 }

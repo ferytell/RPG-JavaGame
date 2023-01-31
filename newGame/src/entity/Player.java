@@ -13,6 +13,8 @@ import javax.imageio.ImageIO;
 import main.GamePanel;
 import main.UtilityTools;
 import main.keyHandler;
+import object.objShieldWood;
+import object.objSwordNormal;
 
 public class Player extends Entity{
 	
@@ -56,11 +58,26 @@ public class Player extends Entity{
 		direction = "down";
 		
 		// PLAYER STATS
+		level = 1;
 		maxLife = 6;
 		life = maxLife;
-		
+		strength = 1;
+		dexterity = 1;
+		exp = 0;
+		nextLevelExp = 5;
+		coin = 0;
+		currentWeapon = new objSwordNormal(gp);
+		currentShield = new objShieldWood(gp);
+		attack = getAttack();
+		defense = getDefense();
 	}
 	
+	public int getAttack() {
+		return attack = strength * currentWeapon.attackValue;
+	}
+	public int getDefense() {
+		return defense = dexterity * currentShield.defenseValue;
+	}
 	public void getPlayerImage() {
 		
 		
@@ -149,7 +166,7 @@ public class Player extends Entity{
 			
 
 			if (keyH.enterPressed == true && attackCanceled == false) {
-				gp.playSE(2);
+				gp.playSE(9);
 				attacking = true;
 				spriteCounter = 0;
 			}
