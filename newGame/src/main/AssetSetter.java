@@ -17,15 +17,19 @@ public class AssetSetter {
 	}
 	
 	public void setObject() {
+		int i = 0;
 		
-		gp.obj[0] = new objDoor(gp);
-		gp.obj[0].worldX = gp.tileSize * 2;
-		gp.obj[0].worldY = gp.tileSize * 7;
-		
+		gp.obj[i] = new objDoor(gp);
+		gp.obj[i].worldX = gp.tileSize * 2;
+		gp.obj[i].worldY = gp.tileSize * 7;
+		i++;
 
-		gp.obj[1] = new objBoot(gp);
-		gp.obj[1].worldX = gp.tileSize * 2;
-		gp.obj[1].worldY = gp.tileSize * 9;
+		gp.obj[i] = new objBoot(gp);
+		gp.obj[i].worldX = gp.tileSize * 2;
+		gp.obj[i].worldY = gp.tileSize * 9;
+		i++;
+		
+		
 	} 
 
 	
@@ -41,16 +45,57 @@ public class AssetSetter {
 	} 
 	
 	public void setMonster() {
+		int i = 0;
 		
-		gp.monster[0] = new monGreenSlime(gp);
-		gp.monster[0].worldX = gp.tileSize * 10;
-		gp.monster[0].worldY = gp.tileSize * 12;
-		
+		gp.monster[i] = new monGreenSlime(gp);
+		gp.monster[i].worldX = gp.tileSize * 10;
+		gp.monster[i].worldY = gp.tileSize * 12;
+		i++;
 
-		gp.monster[1] = new monGreenSlime(gp);
-		gp.monster[1].worldX = gp.tileSize * 9;
-		gp.monster[1].worldY = gp.tileSize * 12;
-	
+		gp.monster[i] = new monGreenSlime(gp);
+		gp.monster[i].worldX = gp.tileSize * 9;
+		gp.monster[i].worldY = gp.tileSize * 12;
+		i++;
+		
+		gp.monster[i] = new monGreenSlime(gp);
+		gp.monster[i].worldX = gp.tileSize * 20;
+		gp.monster[i].worldY = gp.tileSize * 9;
+		i++;
+		
+		gp.monster[i] = new monGreenSlime(gp);
+		gp.monster[i].worldX = gp.tileSize * 24;
+		gp.monster[i].worldY = gp.tileSize * 9;
+		i++;
+		
+		gp.monster[i] = new monGreenSlime(gp);
+		gp.monster[i].worldX = gp.tileSize * 19;
+		gp.monster[i].worldY = gp.tileSize * 6;
+		i++;
+		
+		gp.monster[i] = new monGreenSlime(gp);
+		gp.monster[i].worldX = gp.tileSize * 17;
+		gp.monster[i].worldY = gp.tileSize * 8;
+		i++;
+		
+		gp.monster[i] = new monGreenSlime(gp);
+		gp.monster[i].worldX = gp.tileSize * 23;
+		gp.monster[i].worldY = gp.tileSize * 7;
+		i++;
+		
+		gp.monster[i] = new monGreenSlime(gp);
+		gp.monster[i].worldX = gp.tileSize * 11;
+		gp.monster[i].worldY = gp.tileSize * 4;
+		i++;
+		
+		gp.monster[i] = new monGreenSlime(gp);
+		gp.monster[i].worldX = gp.tileSize * 12;
+		gp.monster[i].worldY = gp.tileSize * 10;
+		i++;
+		
+		gp.monster[i] = new monGreenSlime(gp);
+		gp.monster[i].worldX = gp.tileSize * 25;
+		gp.monster[i].worldY = gp.tileSize * 8;
+		i++;
 	} 
 
 
