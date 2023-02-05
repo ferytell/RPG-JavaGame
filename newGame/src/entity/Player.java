@@ -7,12 +7,14 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
 import main.GamePanel;
 import main.UtilityTools;
 import main.keyHandler;
+import object.objKey;
 import object.objShieldWood;
 import object.objSwordNormal;
 
@@ -24,7 +26,8 @@ public class Player extends Entity{
 	public final int screenX;
 	public final int screenY;
 	public boolean attackCanceled = false;
-	
+	public ArrayList<Entity> inventory = new ArrayList<>();
+	public final int maxInventorySize = 20;
 			
 	public Player(GamePanel gp, keyHandler keyH) {
 		super(gp);
@@ -49,6 +52,7 @@ public class Player extends Entity{
 		setDefaultValues();
 		getPlayerImage();
 		getPlayerAttackImage();
+		setItems();
 	}
 	
 	public void setDefaultValues() {
@@ -72,12 +76,29 @@ public class Player extends Entity{
 		defense = getDefense();
 	}
 	
+	public void setItems() {
+		inventory.add(currentWeapon);
+		inventory.add(currentShield);
+		inventory.add(new objKey(gp));
+		inventory.add(new objKey(gp));
+		inventory.add(new objKey(gp));
+		inventory.add(new objKey(gp));
+		inventory.add(new objKey(gp));
+		inventory.add(new objKey(gp));
+		inventory.add(new objKey(gp));
+		inventory.add(new objKey(gp));
+		inventory.add(new objKey(gp));
+		inventory.add(new objKey(gp));
+		
+	}
 	public int getAttack() {
 		return attack = strength * currentWeapon.attackValue;
 	}
+	
 	public int getDefense() {
 		return defense = dexterity * currentShield.defenseValue;
 	}
+
 	public void getPlayerImage() {
 		
 		
@@ -264,6 +285,7 @@ public class Player extends Entity{
 		
 		
 	}
+	
 	public void contactMonster(int i) {
 		
 		if (i != 999) {
@@ -280,8 +302,7 @@ public class Player extends Entity{
 			
 		}
 	}
-	
-	
+		
 	public void damageMonster(int i) {
 		if (i != 999) {
 			
@@ -323,6 +344,7 @@ public class Player extends Entity{
 			gp.ui.currentDialogue = "you are now lv " + level + "now!";
 		}
 	}
+	
 	public void draw(Graphics2D g2) {
 		
 //		g2.setColor(Color.blue);

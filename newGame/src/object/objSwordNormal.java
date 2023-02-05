@@ -10,6 +10,6 @@ public class objSwordNormal extends Entity{
 		
 		down1 = setup("/objects/sword_normal", gp.tileSize, gp.tileSize);
 		attackValue = 1;
-		
+		description = "[" + name + "]\n An old sword found from trash.";
 	}
 }

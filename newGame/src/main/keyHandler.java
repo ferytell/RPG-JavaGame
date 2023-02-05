@@ -7,6 +7,7 @@ public class keyHandler implements KeyListener {
 	
 	GamePanel gp;
 	public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed;
+	// debug
 	
 
 	public keyHandler(GamePanel gp) {
@@ -152,6 +153,30 @@ public class keyHandler implements KeyListener {
 	public void characterState(int code) {
 		if (code == KeyEvent.VK_C) {
 			gp.gameState =  gp.playState;
+		}
+		if (code == KeyEvent.VK_W) {
+			if (gp.ui.slotRow != 0) {
+				gp.ui.slotRow--;
+				gp.playSE(11);
+			}
+		}
+		if (code == KeyEvent.VK_A) {
+			if (gp.ui.slotCol != 0) {
+				gp.ui.slotCol--;
+				gp.playSE(11);
+			}
+		}
+		if (code == KeyEvent.VK_S) {
+			if (gp.ui.slotRow != 3) {
+				gp.ui.slotRow++;
+				gp.playSE(11);
+			}
+		}
+		if (code == KeyEvent.VK_D) {
+			if (gp.ui.slotCol != 4) {
+				gp.ui.slotCol++;
+				gp.playSE(11);
+			}			
 		}
 	}
 	
