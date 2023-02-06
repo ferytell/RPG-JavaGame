@@ -2,12 +2,15 @@ package main;
 
 import Monster.monGreenSlime;
 import entity.NPC_OldMan;
+import object.objAxe;
 import object.objBoot;
 import object.objCampfire;
 import object.objChest;
 import object.objCoin;
 import object.objDoor;
 import object.objKey;
+import object.objPotionRed;
+import object.objShieldBlue;
 
 public class AssetSetter {
 	GamePanel gp;
@@ -20,13 +23,29 @@ public class AssetSetter {
 		int i = 0;
 		
 		gp.obj[i] = new objDoor(gp);
-		gp.obj[i].worldX = gp.tileSize * 2;
-		gp.obj[i].worldY = gp.tileSize * 7;
+		gp.obj[i].worldX = gp.tileSize * 26;
+		gp.obj[i].worldY = gp.tileSize * 12;
 		i++;
 
-		gp.obj[i] = new objBoot(gp);
+		gp.obj[i] = new objKey(gp);
 		gp.obj[i].worldX = gp.tileSize * 2;
 		gp.obj[i].worldY = gp.tileSize * 9;
+		i++;
+		
+		
+		gp.obj[i] = new objAxe(gp);
+		gp.obj[i].worldX = gp.tileSize * 20;
+		gp.obj[i].worldY = gp.tileSize * 4;
+		i++;
+		
+		gp.obj[i] = new objShieldBlue(gp);
+		gp.obj[i].worldX = gp.tileSize * 3;
+		gp.obj[i].worldY = gp.tileSize * 2;
+		i++;
+		
+		gp.obj[i] = new objPotionRed(gp);
+		gp.obj[i].worldX = gp.tileSize * 11;
+		gp.obj[i].worldY = gp.tileSize * 22;
 		i++;
 		
 		

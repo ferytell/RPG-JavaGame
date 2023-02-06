@@ -178,6 +178,10 @@ public class keyHandler implements KeyListener {
 				gp.playSE(11);
 			}			
 		}
+		if (code  == KeyEvent.VK_ENTER)  {
+			gp.player.selectItem();
+			
+		}
 	}
 	
 	
