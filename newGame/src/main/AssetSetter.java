@@ -7,8 +7,11 @@ import object.objBoot;
 import object.objCampfire;
 import object.objChest;
 import object.objCoin;
+import object.objCoinBronze;
 import object.objDoor;
+import object.objHeart;
 import object.objKey;
+import object.objMana;
 import object.objPotionRed;
 import object.objShieldBlue;
 
@@ -46,6 +49,21 @@ public class AssetSetter {
 		gp.obj[i] = new objPotionRed(gp);
 		gp.obj[i].worldX = gp.tileSize * 11;
 		gp.obj[i].worldY = gp.tileSize * 22;
+		i++;
+		
+		gp.obj[i] = new objHeart(gp);
+		gp.obj[i].worldX = gp.tileSize * 15;
+		gp.obj[i].worldY = gp.tileSize * 5;
+		i++;
+		
+		gp.obj[i] = new objMana(gp);
+		gp.obj[i].worldX = gp.tileSize * 33;
+		gp.obj[i].worldY = gp.tileSize * 8;
+		i++;
+		
+		gp.obj[i] = new objPotionRed(gp);
+		gp.obj[i].worldX = gp.tileSize * 27;
+		gp.obj[i].worldY = gp.tileSize * 14;
 		i++;
 		
 		

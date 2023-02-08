@@ -66,6 +66,9 @@ public class Player extends Entity{
 		level = 1;
 		maxLife = 6;
 		life = maxLife;
+		maxMana = 4;
+		mana = maxMana;
+		ammo = 10;
 		strength = 1;
 		dexterity = 1;
 		exp = 0;
@@ -217,17 +220,34 @@ public class Player extends Entity{
 				}
 				spriteCounter = 0;
 			}
+			
+			if (life > maxLife) {
+				life = maxLife;
+			}
+			if (mana > maxMana) {
+				mana = maxMana;
+			}
 		}
 		
-		if (gp.keyH.shootKeyPressed == true && projectile.alive == false && shootAvailableCounter == 30) {
+		
+		if (shootAvailableCounter < 30) {
+			shootAvailableCounter ++;
+		}
+		if (gp.keyH.shootKeyPressed == true && projectile.alive == false 
+				&& shootAvailableCounter == 30 && projectile.haveResources(this) == true) {
 			
 			// SET DEFAULT COORDINATES. DIRECTION AND USER
 			projectile.set( worldX, worldY, direction, true, this);
+			
+			// SUBREACT THE MANA COST
+			
+			projectile.subtractResource(this);
 			
 			// ADD PROJRCTILE LIST
 			
 			gp.projectileList.add(projectile);
 			gp.playSE(3);
+			shootAvailableCounter = 0;
 		}
 		
 		if (invincible == true) {
@@ -238,9 +258,7 @@ public class Player extends Entity{
 			}
 		}
 		
-		if (shootAvailableCounter < 30 ) {
-			shootAvailableCounter ++;
-		}
+
 	}
 	
 	public void attacking() {
@@ -294,20 +312,31 @@ public class Player extends Entity{
 		
 		if(i != 999) {
 			
-			String text;
-			if (inventory.size() != maxInventorySize) {
-				inventory.add(gp.obj[i]);
-				gp.playSE(4);
-				text = "you got a" + gp.obj[i].name + "!";
-				
+			// PICKUP ONLY ITEMS
+			
+			if (gp.obj[i].type == type_pickupOnly) {
+				gp.obj[i].use(this);
+				gp.obj[i] = null;
 			}
 			
+			// INVENTORY ITEMS
+			
 			else {
-				text = "your inventory is full, dummy!!";
+				String text;
+				if (inventory.size() != maxInventorySize) {
+					inventory.add(gp.obj[i]);
+					gp.playSE(4);
+					text = "you got a" + gp.obj[i].name + "!";
+					
+				}
+				
+				else {
+					text = "your inventory is full, dummy!!";
+				}
+				gp.ui.addMessage(text);
+				gp.obj[i] = null;
+				
 			}
-			gp.ui.addMessage(text);
-			gp.obj[i] = null;
-
 		} 
 	}
 	

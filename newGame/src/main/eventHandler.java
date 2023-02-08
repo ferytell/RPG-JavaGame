@@ -98,6 +98,8 @@ public class eventHandler {
 			gp.player.attackCanceled = true; 
 			gp.ui.currentDialogue = "healing virtue";
 			gp.player.life = gp.player.maxLife;
+			gp.player.mana = gp.player.maxMana;
+			gp.aSetter.setMonster();
 		}
 		
 		

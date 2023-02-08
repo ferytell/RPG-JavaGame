@@ -137,6 +137,7 @@ public class keyHandler implements KeyListener {
 		}
 		if(code == KeyEvent.VK_F) {
 			shootKeyPressed = true;
+			
 		}
 
 	}
