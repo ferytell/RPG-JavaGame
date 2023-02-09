@@ -4,6 +4,9 @@ import java.util.Random;
 
 import entity.Entity;
 import main.GamePanel;
+import object.objCoinBronze;
+import object.objHeart;
+import object.objMana;
 import object.objRock;
 
 public class monGreenSlime extends Entity{
@@ -79,6 +82,25 @@ public class monGreenSlime extends Entity{
 	public void damageReaction() {
 		actionLockCounter = 0;
 		direction = gp.player.direction;
+	}
+	
+	public void checkDrop()  {
+		
+		// cast probability
+		int i = new Random().nextInt(101);
+		
+		// set the probability
+		
+		if (i < 60) {
+			dropItem(new objCoinBronze(gp));
+		}
+		if (i >= 60 && i <= 85) {
+			dropItem(new objHeart(gp));
+		}
+		if (i >= 85 && i <= 100) {
+			dropItem(new objMana(gp));
+		}
+		
 	}
 	
 	
