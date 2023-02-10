@@ -15,6 +15,7 @@ import entity.Entity;
 import entity.Player;
 import object.objCoin;
 import tile.TileManager;
+import tile_interactive.tile_interactive;
 
 public class GamePanel extends JPanel implements Runnable{
 	
@@ -67,7 +68,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public Entity obj[] = new Entity[30]; 				// number of obj that can be displayed
 	public Entity npc[] = new Entity[10];
 	public Entity monster[] = new Entity[30];
-	
+	public tile_interactive iTile[] = new tile_interactive[50];
 	public ArrayList<Entity> projectileList = new ArrayList<>();
 	ArrayList<Entity> entityList = new ArrayList<>();
 	
@@ -95,6 +96,8 @@ public class GamePanel extends JPanel implements Runnable{
 		aSetter.setObject(); 
 		aSetter.setNPC();
 		aSetter.setMonster();
+		aSetter.setInteractiveTiles();
+		
 	//	playMusic(7);
 	//	stopMusic();
 		gameState = titleState;
@@ -181,7 +184,12 @@ public class GamePanel extends JPanel implements Runnable{
 					
 				}
 			}
-			
+			// <<<<<<<<<<<<<<<< INTERACTIVE TILES UPDATE  >>>>>>>>>>>>>>>>
+			for (int i = 0; i < iTile.length; i++) {
+				if (iTile[i] != null) {
+					iTile[i].update();
+				}
+			}
 		}
 		
 		if(gameState == pauseState) {
@@ -205,6 +213,12 @@ public class GamePanel extends JPanel implements Runnable{
 		else {
 			// <<<<<<<<<<<<<<<< Tile draw  >>>>>>>>>>>>>>>>
 			tileMan.draw(g2);
+			// <<<<<<<<<<<<<<<< Tile Interactive  >>>>>>>>>>>>>>>>
+			for (int i = 0; i < iTile.length; i++) {
+				if (iTile[i] != null) {
+					iTile[i].draw(g2);
+				}
+			}
 			
 			// >>>>>>>>>>>>>>>>>>> add Entity to List <<<<<<<<<<<<<<<<<<<<	
 			entityList.add(player);

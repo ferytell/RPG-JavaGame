@@ -203,7 +203,7 @@ public class UI {
 			
 			// TITLE NAME
 			g2.setFont(g2.getFont().deriveFont(Font.PLAIN,25f));
-			String text = "THE  LEGEND  OF  TOKENENK ";
+			String text = "THE  LEGEND  OF  Fool ";
 			int x = getXforCenterText(text);
 			int y = gp.tileSize * 2;
 			
@@ -329,7 +329,7 @@ public class UI {
 			g2.setColor(Color.WHITE);
 			g2.setFont(g2.getFont().deriveFont(30F));
 			
-			String text = "The Legends of Tokeneng";
+			String text = "The Legends of Fools";
 			int x = getXforCenterText(text);
 			int y = gp.tileSize * 3;
 			g2.drawString(text, x, y);

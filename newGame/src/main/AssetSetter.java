@@ -14,6 +14,7 @@ import object.objKey;
 import object.objMana;
 import object.objPotionRed;
 import object.objShieldBlue;
+import tile_interactive.dryTree;
 
 public class AssetSetter {
 	GamePanel gp;
@@ -133,7 +134,16 @@ public class AssetSetter {
 		gp.monster[i].worldX = gp.tileSize * 25;
 		gp.monster[i].worldY = gp.tileSize * 8;
 		i++;
-	} 
+	}
+	
+	public void setInteractiveTiles() {
+		int i=0;
+		gp.iTile[i] = new dryTree(gp, 2, 21); i++;
+		gp.iTile[i] = new dryTree(gp, 3, 21); i++;
+		gp.iTile[i] = new dryTree(gp, 4, 21); i++;
+		gp.iTile[i] = new dryTree(gp, 16, 10); i++;
+		
+	}
 
 
 }
