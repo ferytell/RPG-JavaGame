@@ -1,5 +1,7 @@
 package tile_interactive;
 
+import java.awt.Color;
+
 import entity.Entity;
 import main.GamePanel;
 
@@ -36,5 +38,25 @@ public class dryTree extends tile_interactive {
 		tile_interactive tile = new treeTrunk(gp, worldX/gp.tileSize, worldY/gp.tileSize);
 		return tile;
 	}
-
+	
+	// ---------------Particles---------------------
+	 
+	public Color getParticleColor() {
+		Color color = new Color(20,41,32);
+		return color;
+	}
+	
+	public int getParticleSize() {
+		int size = 6;				// 6 pixel
+		return size;
+	}
+	
+	public int getParticleSpeed() {
+		int speed = 1;
+		return speed;
+	}
+	public int getParticleMaxLife() {
+		int maxLife = 20;
+		return maxLife;
+	}
 }

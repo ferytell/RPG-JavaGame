@@ -132,6 +132,47 @@ public class Entity {
 		}
 	}
 	
+	// ---------------Particles------Here we set nothing because we will override it-------------
+	
+		public Color getParticleColor() {
+			Color color = null;//null
+			return color;
+		}
+		
+		public int getParticleSize() {
+			int size = 0;				//  pixel
+			return size;
+		}
+		
+		public int getParticleSpeed() {
+			int speed = 0;
+			return speed;
+		}
+		public int getParticleMaxLife() {
+			int maxLife = 0;
+			return maxLife;
+		}
+		
+		public void generateParticle(Entity generator, Entity target) {
+			
+			Color color = generator.getParticleColor();
+			int size = generator.getParticleSize();
+			int speed = generator.getParticleSpeed();
+			int maxLife = generator.getParticleMaxLife();
+			System.out.println(gp.particleList);
+			
+			Particle p1 = new Particle(gp, generator, color, size, speed, maxLife, -2, -1);
+			Particle p2 = new Particle(gp, generator, color, size, speed, maxLife, 2, -1);
+			Particle p3 = new Particle(gp, generator, color, size, speed, maxLife, -2, 1);
+			Particle p4 = new Particle(gp, generator, color, size, speed, maxLife, 2, 1);
+						
+			gp.particleList.add(p1);
+			gp.particleList.add(p2);
+			gp.particleList.add(p3);
+			gp.particleList.add(p4);
+		}
+		// =====================================================================================
+	
 	public void update() {
 		setAction();
 		// ============================ Collision checker to make sure entity not go into wall ==============

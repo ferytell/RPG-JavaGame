@@ -1,6 +1,8 @@
 
 package object;
 
+import java.awt.Color;
+
 import entity.Entity;
 import entity.Projectiles;
 import main.GamePanel;
@@ -49,6 +51,26 @@ public class objRock extends Projectiles {
 		user.ammo -= useCost;
 		
 	}
+	// ---------------Particles---------------------
+	 
+		public Color getParticleColor() {
+			Color color = new Color(4,44,32);
+			return color;
+		}
+		
+		public int getParticleSize() {
+			int size = 10;				// 6 pixel
+			return size;
+		}
+		
+		public int getParticleSpeed() {
+			int speed = 1;
+			return speed;
+		}
+		public int getParticleMaxLife() {
+			int maxLife = 20;
+			return maxLife;
+		}
 
 
 }

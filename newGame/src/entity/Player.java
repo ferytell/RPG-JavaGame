@@ -415,6 +415,10 @@ public class Player extends Entity{
 			gp.iTile[i].life--;
 			gp.iTile[i].invincible = true;
 			
+			// generate particle when tile get damage
+			generateParticle(gp.iTile[i], gp.iTile[i]);
+			
+			
 			if (gp.iTile[i].life == 0) {
 				gp.iTile[i]	= gp.iTile[i].getDestroyedForm();  
 			}
@@ -426,8 +430,9 @@ public class Player extends Entity{
 		
 		if (exp >= nextLevelExp ) {
 			level ++;
-			nextLevelExp = nextLevelExp * 2;
+			nextLevelExp = nextLevelExp * 3;
 			maxLife += 2;
+			maxMana += 1;
 			strength ++;
 			dexterity++;
 			attack = getAttack();
