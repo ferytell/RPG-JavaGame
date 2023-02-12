@@ -273,7 +273,7 @@ public class Player extends Entity{
 		}
 		if (spriteCounter > 5 && spriteCounter <= 25) {
 			spriteNum = 2;
-			
+		}
 			// save current worldX, worldY, solidArea on temporary variable
 			int currentWorldX = worldX;
 			int currentWorldY = worldY;
@@ -308,7 +308,7 @@ public class Player extends Entity{
 			worldY = currentWorldY;
 			solidArea.width = solidAreaWidth; 
 			solidArea.height = solidAreaHeight;
-		}
+		
 		if (spriteCounter > 25) {
 			spriteNum = 1;
 			spriteCounter = 0;
@@ -433,6 +433,7 @@ public class Player extends Entity{
 			nextLevelExp = nextLevelExp * 3;
 			maxLife += 2;
 			maxMana += 1;
+			mana = maxMana;
 			strength ++;
 			dexterity++;
 			attack = getAttack();
