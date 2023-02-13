@@ -49,6 +49,7 @@ public class GamePanel extends JPanel implements Runnable{
 	int screenHeight2 = screenHeight;
 	BufferedImage tempScreen;
 	Graphics2D g2;
+	public boolean fullScreenOn = false;
 	
 	
 	// FPS setting
@@ -89,6 +90,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int pauseState = 2;
 	public final int dialogueState = 3;
 	public final int characterState = 4;
+	public final int optionState = 5;
 	
 
 	
@@ -100,6 +102,8 @@ public class GamePanel extends JPanel implements Runnable{
 		this.addKeyListener(keyH);
 		this.setFocusable(true);
 	}
+	
+	
 	
 	public void setupGame() {
 		aSetter.setObject(); 
@@ -114,7 +118,7 @@ public class GamePanel extends JPanel implements Runnable{
 		tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
 		g2 = (Graphics2D)tempScreen.getGraphics();
 		
-		setFullScreen();
+//		setFullScreen();
 	}	
 	
 	public void setFullScreen() {
@@ -193,7 +197,6 @@ public class GamePanel extends JPanel implements Runnable{
 						monster[i].checkDrop();
 						monster[i] = null;
 					}
-					
 				}
 			}
 			// <<<<<<<<<<<<<<<PROJECTILE UPDATE  >>>>>>>>>>>>>>>>
@@ -205,7 +208,6 @@ public class GamePanel extends JPanel implements Runnable{
 					if (projectileList.get(i).alive == false) {
 						projectileList.remove(i);
 					}
-					
 				}
 			}
 			// <<<<<<<<<<<<<<<< PARTICLE UPDATE  >>>>>>>>>>>>>>>>
@@ -317,7 +319,6 @@ public class GamePanel extends JPanel implements Runnable{
 		g.dispose();
 	}
 	
-	
 	public void playMusic(int i) {
 		
 		music.setFile(i);
@@ -326,6 +327,7 @@ public class GamePanel extends JPanel implements Runnable{
 	}
 
 	public void stopMusic() {
+		
 		music.stop();
 	}
 	
@@ -334,10 +336,6 @@ public class GamePanel extends JPanel implements Runnable{
 		soundEffect.setFile(i);
 		soundEffect.play();
 	}
-	
-	
-	
-	
 }
 	
 	
