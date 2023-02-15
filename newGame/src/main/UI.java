@@ -123,6 +123,11 @@ public class UI {
 		if (gp.gameState == gp.optionState) {		 
 			drawOptionScreen();		
 		}
+		
+		// >>>>>>>>>>>>>>>>>>  GAME OVER STATE  <<<<<<<<<<<<<<<<<<<<<<<
+		if (gp.gameState == gp.gameOverState) {		 
+			drawGameOverScreen();		
+		}
 	}
 	
 	public void drawPlayerLife() { // AND MANA
@@ -559,6 +564,47 @@ public class UI {
 	public int getItemIndexOnSlot() {
 		int itemIndex = slotCol + (slotRow * 5);
 		return itemIndex;
+	}
+	
+	public void drawGameOverScreen() {
+		g2.setColor(new Color(60,0,0,200));
+		g2.fillRect(0,0,gp.screenWidth, gp.screenHeight);
+		
+		int x;
+		int y;
+		String text;
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 90F));
+		
+		text = "GAME OVER";
+		// SHADOW
+		g2.setColor(Color.BLACK);
+		x = getXforCenterText(text);
+		y = gp.tileSize * 6;
+		g2.drawString(text, x, y);
+		
+		//MAIN
+		g2.setColor(Color.WHITE);
+		g2.drawString(text, x-4, y-4);
+		
+		// RETRY
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30F));
+		text = "Retry";
+		x = getXforCenterText(text)/2;
+		y += gp.tileSize * 3;
+		g2.drawString(text, x, y);
+		if (commandNum == 0) {
+			g2.drawString(">>              <<", x - 40, y);
+		}
+		
+		// BACK TO MAIN MENU
+		text = "Quit";
+		x = (getXforCenterText(text)/2) + getXforCenterText(text);
+		//y += 55;
+		g2.drawString(text, x, y);
+		if (commandNum == 1) {
+			g2.drawString(">>              <<", x - 40, y);
+		}
+		 
 	}
 	
 	public void drawOptionScreen() {

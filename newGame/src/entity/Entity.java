@@ -284,7 +284,7 @@ public class Entity {
 			g2.fillRect(screenX, screenY - 15, (int)hpBarValue, 5);
 			hpBarCounter ++; 
 			
-			if (hpBarCounter > 600) {
+			if (hpBarCounter > 200) {
 				hpBarCounter = 0;
 				hpBarOn = false;
 			}

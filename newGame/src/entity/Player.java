@@ -81,7 +81,22 @@ public class Player extends Entity{
 		defense = getDefense();
 	}
 	
+	public void setDefaultPosition() {
+		worldX = gp.tileSize * 10;
+		worldY = gp.tileSize * 18;
+		direction = "down";
+		
+	}
+	
+	public void restoreLifeAndMana() {
+		life = maxLife;
+		mana = maxMana;
+		invincible = false;
+		
+	}
+	
 	public void setItems() {
+		inventory.clear();
 		inventory.add(currentWeapon);
 		inventory.add(currentShield);
 		inventory.add(new objKey(gp));
@@ -147,48 +162,27 @@ public class Player extends Entity{
 		if(keyH.upPressed == true || keyH.rightPressed == true ||
 				keyH.downPressed == true || keyH.leftPressed == true || keyH.enterPressed == true) {
 			
-			if(keyH.upPressed == true) {
-				direction = "up";	
-			}
-			if(keyH.downPressed == true) {
-				direction = "down";
-			}
-			if(keyH.leftPressed == true) {
-				direction = "left";
-			}
-			if(keyH.rightPressed == true) {
-				direction = "right";
-			}
+			if(keyH.upPressed == true) { direction = "up"; }
+			if(keyH.downPressed == true) { direction = "down";	}
+			if(keyH.leftPressed == true) { direction = "left"; }
+			if(keyH.rightPressed == true) {	direction = "right"; }
 			
 		// >>>>>>>>>>>>>>>  Check tile collision  <<<<<<<<<<<<<<<<<<<<<<
-			
 			collisionOn = false;
 			gp.cChecker.checkTile(this);
-			
-			
 		// >>>>>>>>>>>>>>>>>>>  Check object collision <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-			
 			int objIndex = gp.cChecker.checkObject(this, true);
 			pickUpObject(objIndex);
-			
 		// >>>>>>>>>>>>>>>>>>> Check NPC Collision <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-			
 			int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
 			interactNPC(npcIndex);
-		
 		// >>>>>>>>>>>>>>>>>>> Check Monster Collision <<<<<<<<<<<<<<<<<<<<<<<<
-				
 			int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
 			contactMonster(monsterIndex);
-			
 		// <<<<<<<<<<<<<<<<<<<<<< CHECK TILES INTERACTIVE COLLISION >>>>>>>>>>>>>>>>>>>>>>
-		
 			int iTileIndex = gp.cChecker.checkEntity(this, gp.iTile);
-			
 		// >>>>>>>>>>>>>>>>>>> Check Event <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 			gp.eHandler.checkEvent();
-			
-			
 		// If collision is false, player can move  
 			if(collisionOn == false && keyH.enterPressed == false) {
 				switch(direction) {
@@ -203,7 +197,6 @@ public class Player extends Entity{
 				}
 			}
 			
-
 			if (keyH.enterPressed == true && attackCanceled == false) {
 				gp.playSE(9);
 				attacking = true;
@@ -261,6 +254,19 @@ public class Player extends Entity{
 			}
 		}
 		
+		if (shootAvailableCounter < 30) {
+			shootAvailableCounter ++;
+		}
+		
+		if (life > maxLife) {
+			life = maxLife;
+		}
+		if (mana > maxMana) {
+			mana = maxMana;
+		}
+		if (life <=0) {
+			gp.gameState = gp.gameOverState;
+		}
 
 	}
 	
@@ -273,6 +279,12 @@ public class Player extends Entity{
 		}
 		if (spriteCounter > 5 && spriteCounter <= 25) {
 			spriteNum = 2;
+			//bug fix so player wont attack while moving ---------
+			keyH.upPressed = false;								//-
+			keyH.downPressed = false;							//-
+			keyH.leftPressed = false;							//-
+			keyH.rightPressed = false;							//-
+			//-----------------------------------------------------
 		}
 			// save current worldX, worldY, solidArea on temporary variable
 			int currentWorldX = worldX;
@@ -486,7 +498,7 @@ public class Player extends Entity{
 				if (spriteNum == 1) {image = up1;}
 				if (spriteNum == 2) {image = up2;}	
 			}
-			else if (attacking == true) {
+			if (attacking == true) {
 				tempScreenY = screenY - gp.tileSize;
 				if (spriteNum == 1) {image = attackUp1;}
 				if (spriteNum == 2) {image = attackUp2;}
@@ -497,7 +509,7 @@ public class Player extends Entity{
 				if (spriteNum == 1) {image = down1;}
 				if (spriteNum == 2) {image = down2;}		
 			}
-			else if (attacking == true) {
+			if (attacking == true) {
 				if (spriteNum == 1) {image = attackDown1;}
 				if (spriteNum == 2) {image = attackDown2;}
 			}
@@ -507,7 +519,7 @@ public class Player extends Entity{
 				if (spriteNum == 1) {image = left1;}
 				if (spriteNum == 2) {image = left2;}				
 			}
-			else if (attacking == true) {
+			if (attacking == true) {
 				tempScreenX = screenX - gp.tileSize;
 				if (spriteNum == 1) {image = attackLeft1;}
 				if (spriteNum == 2) {image = attackLeft2;}
@@ -518,7 +530,7 @@ public class Player extends Entity{
 				if (spriteNum == 1) {image = right1;}
 				if (spriteNum == 2) {image = right2;}				
 			}
-			else if (attacking == true) {
+			if (attacking == true) {
 				if (spriteNum == 1) {image = attackRight1;}
 				if (spriteNum == 2) {image = attackRight2;}
 			}
