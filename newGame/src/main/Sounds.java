@@ -30,6 +30,9 @@ public class Sounds {
 		soundURL[10] = getClass().getResource("/sounds/ahhahh-.wav");
 		soundURL[11] = getClass().getResource("/sounds/cursor.wav");
 		soundURL[12] = getClass().getResource("/sounds/cuttree.wav");
+		soundURL[13] = getClass().getResource("/sounds/gameover.wav");
+		soundURL[14] = getClass().getResource("/sounds/stairs.wav");
+		
 		
 
 	}

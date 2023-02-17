@@ -274,6 +274,7 @@ public class keyHandler implements KeyListener {
 			if (gp.ui.commandNum == 0) {
 				gp.gameState = gp.playState;
 				gp.retry();
+				gp.playMusic(7);
 			}
 			else if (gp.ui.commandNum == 1) {
 				gp.gameState = gp.titleState;

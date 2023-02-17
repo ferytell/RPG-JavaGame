@@ -15,17 +15,18 @@ public class TileManager {
 	
 	GamePanel gp;
 	public Tile[] tile;
-	public int mapTileNum[] [];
+	public int mapTileNum[] [] []; 					// we store mapNum into 3Dimensional array
 	
 	
 	public TileManager(GamePanel gp) {
 		this.gp = gp;
 		
 		tile = new Tile[40];
-		mapTileNum = new int[gp.maxWorldCol] [gp.maxWorldRow];
+		mapTileNum = new int [gp.maxMap] [gp.maxWorldCol] [gp.maxWorldRow];
 		
 		getTileImage();
-		loadMap("/maps/island2.txt"); 
+		loadMap("/maps/island2.txt", 0);
+		loadMap("/maps/island.txt", 1);
 	}
 	
 	public void getTileImage() {
@@ -87,7 +88,7 @@ public class TileManager {
 		
 	}
 	
-	public void loadMap(String filePath) {
+	public void loadMap(String filePath, int map) {
 		try {
 			InputStream is = getClass().getResourceAsStream(filePath);
 			BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -104,7 +105,7 @@ public class TileManager {
 					
 					int num = Integer.parseInt(numbers[col]); 
 					
-					mapTileNum[col] [row] = num;
+					mapTileNum [map] [col] [row] = num;
 					col++;
 				}
 				if(col == gp.maxWorldCol) {
@@ -127,7 +128,7 @@ public class TileManager {
 		
 		while(worldCol < gp.maxWorldCol && worldRow < gp.maxWorldRow) {
 			
-			int tileNum = mapTileNum [worldCol] [worldRow];
+			int tileNum = mapTileNum [gp.currentMap] [worldCol] [worldRow];
 			
 			int worldX = worldCol * gp.tileSize;
 			int worldY = worldRow * gp.tileSize;
