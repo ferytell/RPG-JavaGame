@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -65,11 +66,14 @@ public class Entity {
 	
 	// >>>>>>>>>>>>>>>>>>>>>>> ITEMS ATTR <<<<<<<<<<<<<<<<<<<<<<<<<
 	
+	public ArrayList<Entity> inventory = new ArrayList<>();
+	public final int maxInventorySize = 20;
 	public int value;
 	public int attackValue;
 	public int defenseValue;
 	public String description = "";
 	public int useCost;
+	
 	
 	// >>>>>>>>>>>>>>>>>>>>>>> ITEMS ATTR <<<<<<<<<<<<<<<<<<<<<<<<<
 	public int type;						// 0: player, 1: NPC, 2: Monster

@@ -27,8 +27,7 @@ public class Player extends Entity{
 	public final int screenX;
 	public final int screenY;
 	public boolean attackCanceled = false;
-	public ArrayList<Entity> inventory = new ArrayList<>();
-	public final int maxInventorySize = 20;
+
 			
 	public Player(GamePanel gp, keyHandler keyH) {
 		super(gp);
@@ -553,7 +552,7 @@ public class Player extends Entity{
 
 		// to draw HITBOXES we will delete it later
 		g2.setColor(Color.red);
-		g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
+//		g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
 		
 		
 		// reset opacity
