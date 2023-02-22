@@ -18,6 +18,8 @@ public class objMana extends Entity{
 		down1 = setup ("/objects/manacrystal_full", gp.tileSize, gp.tileSize);
 		image = setup ("/objects/manacrystal_full", gp.tileSize, gp.tileSize);
 		image2 = setup ("/objects/manacrystal_blank", gp.tileSize, gp.tileSize);
+		description = "[" + name + "]\n Cristal for restore\n" + value + " your mana.";
+		price = 5;
 		
 	}
 	

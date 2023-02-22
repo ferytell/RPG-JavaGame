@@ -12,5 +12,6 @@ public class objKey extends Entity{
 		name = "key";
 		down1 = setup("/objects/keys_1_1", gp.tileSize, gp.tileSize);
 		description = "[" + name + "]\n A key, I don'k know suddenly\n it's  just there inside my pocket.";
+		price = 5;
 	}
 }

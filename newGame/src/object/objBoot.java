@@ -9,6 +9,8 @@ public class objBoot extends Entity {
 		super(gp);
 		name = "boot";
 		down1 = setup("/objects/boots", gp.tileSize, gp.tileSize);
+		price = 7;
+		description = "[" + name + "]\n Speed up\n" + value + " your Death.";
 	}
 	
 

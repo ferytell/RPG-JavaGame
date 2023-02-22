@@ -77,7 +77,7 @@ public class Player extends Entity{
 		dexterity = 1;
 		exp = 0;
 		nextLevelExp = 5;
-		coin = 0;
+		coin = 100;
 		currentWeapon = new objSwordNormal(gp);
 		currentShield = new objShieldWood(gp);
 		projectile = new objFireball(gp);
@@ -465,7 +465,7 @@ public class Player extends Entity{
 	}
 	
 	public void selectItem() {
-		int itemIndex = gp.ui.getItemIndexOnSlot();
+		int itemIndex = gp.ui.getItemIndexOnSlot(gp.ui.playerSlotCol, gp.ui.playerSlotRow);
 		
 		if (itemIndex < inventory.size()) {
 			Entity selectedItem = inventory.get(itemIndex);
